@@ -104,6 +104,22 @@ Note: If you need more testing, update test_input.txt and spec.json, and then ru
 ```bash
 docker run --rm -v $(pwd):/app my_parser_app
 ```
+## Expected Results
+To view the contents of the generated `result.csv`, you can use the following command:
+
+```bash
+cat result.csv
+```
+```text
+f1;f2;f3;f4;f5;f6;f7;f8;f9;f10
+f1123;f21234567890;f31;f4;f512345678901;f612345;f712345678;f812345678901;f9123456789012345678;f101234567890
+hello;world 4;567;_;te01 12345;67890ab;c  example;datatest;sample     text;_
+hello;world 4567;_;_;_;_;_;_;_;_
+this;is a test fo;r t;he;parsing func;tionali;ty;_;_;_
+data;for splittin;g;_;_;_;_;_;_;_
+12345;6789abcdefg;_;_;_;_;_;_;_;_
+unita;123456789abc;123;12;_;_;_;_;_;_
+```
 
 ## How to See Docker Info
 1. List all containers
