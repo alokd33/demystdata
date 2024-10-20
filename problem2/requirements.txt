@@ -1,0 +1,3 @@
+cryptography
+pyspark==3.5.3
+parquet-tools
