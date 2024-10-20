@@ -62,32 +62,59 @@ This project is designed to parse fixed-width text files based on specified conf
          v
 +------------------+
 |                  |
-|   result.csv     |   (Output: Delimited CSV file and sample file result_sample.csv )
+|   result.csv     |   (Output: Delimited CSV file and sample file result_sample.csv)
 |                  |
 +------------------+
+
 ```
 
-## How to build Docker 
+## How to Build Docker
+1. Create a new directory:
+```bash
+mkdir docker_problem1
+```
+2. Change to that directory
+```bash
+cd docker_problem1
+```
+3. Clone the repository
+```bash
+git clone https://github.com/alokd33/demystdata.git
+```
+4. Change to the project directory:
+```bash
+cd demystdata/problem1
+```
+5. Build the Docker image:
+```bash
+docker build -t my_parser_app .
+```
 
-	1. mkdir docker_problem1
-	2. cd docker_problem1
-	3. git clone https://github.com/alokd33/demystdata.git
-	4. cd demystdata/problem1
-	5. #Build the Docker image:
-  	 docker build -t my_parser_app .
+## How to Run Docker
+To run the application and generate the output, use the following command:
+```bash
+docker run --rm -v $(pwd):/app my_parser_app
+```
+## How to Validate the Output
+To see the output, check the first line for the header and subsequent lines for data:
+```bash
+cat result.csv
+```
+Note: If you need more testing, update test_input.txt and spec.json, and then run:
+```bash
+docker run --rm -v $(pwd):/app my_parser_app
+```
 
-
-## How to run Docker
-
-	1. # Run the application: To run the parser and generate the output, use the following command:
-	   docker run --rm -v $(pwd):/app my_parser_app
-
-## How to validate the output, see first line for header and second line and further for data 
-	  cat result.csv
-   Note : if you need more testing then update test_input.txt and spec.json and then run 
-     docker run --rm -v $(pwd):/app my_parser_app
-
-## How to see docker info
-    1. docker ps -a # get running CONTAINER ID
-    2. docker stop <CONTAINER ID  f7cd0e227d47> # stop CONTAINER ID
-    3. docker rm <CONTAINER ID  f7cd0e227d47> # remove CONTAINER ID
+## How to See Docker Info
+1. List all containers
+```bash
+docker ps -a  # Get running CONTAINER ID
+```
+2. Stop a specific container
+```bash
+docker stop <CONTAINER ID>
+```
+3. Remove a specific containe
+```bash
+docker rm <CONTAINER ID>
+```
