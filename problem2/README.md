@@ -13,7 +13,23 @@ Decrypt Data: └─ decrypt_data.py → Reads anonymized_output.csv, decrypts t
 Bash Script: └─ anonymize.sh → Orchestrates the process, logs results, and handles errors.
 
 ## How to Build Docker
-To build the Docker image for this project, run the following command in your terminal:
+1. Create a new directory:
+```bash
+mkdir docker_problem2
+```
+2. Change to that directory
+```bash
+cd docker_problem2
+```
+3. Clone the repository
+```bash
+git clone https://github.com/alokd33/demystdata.git
+```
+4. Change to the project directory:
+```bash
+cd demystdata/problem2
+```
+5. To build the Docker image for this project, run the following command in your terminal:
 ```bash
 docker build --no-cache -t pyspark_anonymize .
 ```
