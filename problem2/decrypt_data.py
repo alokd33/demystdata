@@ -18,9 +18,12 @@ def decrypt_csv(input_file: str, key: str):
         .appName("Decrypt CSV") \
         .getOrCreate()
 
+    # Broadcast the key to all nodes
+    broadcast_key = spark.sparkContext.broadcast(key)
+    
     df = spark.read.csv(input_file, header=True, inferSchema=True)
 
-    decrypt_udf = udf(lambda x: decrypt_value(x, key), StringType())
+    decrypt_udf = udf(lambda x: decrypt_value(x, broadcast_key.value), StringType())
 
     df_decrypted = df.withColumn("first_name", decrypt_udf(col("first_name"))) \
                      .withColumn("last_name", decrypt_udf(col("last_name"))) \
