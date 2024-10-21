@@ -26,40 +26,40 @@ Bash Script: └─ anonymize.sh → Orchestrates the process, logs results, and
           |
           v
 +---------------------------+
-|   Store Key in File      |
-|   (secret.key)           |
+|   Store Key in File       |
+|   (secret.key)            |
 +---------------------------+
           |
           v
 +---------------------------+
 |   Load Key                |
-|  (in encrypt_data.py)    |
+|  (in encrypt_data.py)     |
 +---------------------------+
           |
           v
-+---------------------------+
-|   Broadcast Key to Nodes  |
++----------------------------------+
+|   Broadcast Key to Nodes         |
 |   (spark.sparkContext.broadcast) |
-+---------------------------+
++----------------------------------+
           |
           v
 +---------------------------+
-|   Read Input CSV         |
-|  (input.csv)             |
+|   Read Input CSV          |
+|  (input.csv)              |
 +---------------------------+
           |
           v
-+---------------------------+
-|   Encrypt Data            |
-|   (anonymize_csv)        |
-|   - UDF uses broadcasted key |
-+---------------------------+
++--------------------------------+
+|   Encrypt Data                 |
+|   (anonymize_csv)              |
+|   - UDF uses broadcasted key   |
++--------------------------------+
           |
           v
-+---------------------------+
-|   Write Encrypted Data    |
++------------------------------+
+|   Write Encrypted Data       |
 |   (to anonymized_output.csv) |
-+---------------------------+
++------------------------------+
           |
           v
 +---------------------------+
@@ -68,26 +68,26 @@ Bash Script: └─ anonymize.sh → Orchestrates the process, logs results, and
 +---------------------------+
           |
           v
-+---------------------------+
-|   Broadcast Key to Nodes   |
-|   (spark.sparkContext.broadcast) |
-+---------------------------+
++-----------------------------------+
+|   Broadcast Key to Nodes          |
+|   (spark.sparkContext.broadcast)  |
++-----------------------------------+
           |
           v
-+---------------------------+
-|   Decrypt Data            |
-|   (decrypt_csv)          |
++------------------------------+
+|   Decrypt Data               |
+|   (decrypt_csv)              |
 |   - UDF uses broadcasted key |
-+---------------------------+
++------------------------------+
+          |
+          v
++-----------------------------+
+|   Display Decrypted Data    |
++-----------------------------+
           |
           v
 +---------------------------+
-|   Display Decrypted Data   |
-+---------------------------+
-          |
-          v
-+---------------------------+
-|       End Process          |
+|       End Process         |
 +---------------------------+
 ```
 
@@ -117,12 +117,12 @@ al,test,111 Elm St,2024-05-15
 ```
 
 ## Sample Encrypted Data
-After processing, the data is anonymized and saved in anonymized_output.csv as shown below:
+After processing, the data is anonymized and saved in anonymized_output.csv as shown below (Data will update/chnage based on key):
 ```csv
 first_name,last_name,address,date_of_birth
-gAAAAABnFM0-LVjGEya9URtjfKcjYnBoYHbfxCXVRFLX54N-dPAz-A3ayprq7V2mc0BDfKWdMFy2cpG_K2usqdn8Mg06xY91Rg==,gAAAAABnFM0-JD5_li3e9XAIRip53dd9LG8WCQIwhV_FlpR__TqL7MZGM0Rkcrbvzlc1812FbAxwBhkFhncLba5AQG3s-bYc4w==,gAAAAABnFM0-_5eYMI9FeJ3AHKEJnajHx5Ii9HOIR7obl_Jdtw3yLoBWhfpRIdjjSj7FqI9rpkWI87WpiCC5Ba9N6B1Xac_9ew==,1990-01-01
-gAAAAABnFM0-YK2KRpMUPw57RJ3MVGwQtUeSYim6CYJtLR6Q6JwbUhBg4XFV7h1r-VJhe2-ivXxxgemZA-Lfu81JGFW2YO31cg==,gAAAAABnFM0-UPxDmmbNyJmZzhx78cWwDdZxB8iT0NOPM9MNs7RGk9jzkdExfHRRBVfCFOSvqgLmBVRupdYYivXZtySpMySUMw==,gAAAAABnFM0-FazwPPRHZn_UfEzpNqF4iiyyAsDaIu0u_zpjtZnlNCLg0z6axdcbtB2pzUhl7LxYlz-xzHmQcWOTucxvdPb5Nw==,1985-05-15
-gAAAAABnFM0-x1VnBPSzI5REvlSde9X4d2jAan13YHQLPMiV8fuxrFbaVcgPlpK7B4xVpx7ANkyTaxvlW16Qj06sN_t3ReubvA==,gAAAAABnFM0-cYQftZ0d4nJ_StyFXfWhV_n5S5evxUSQJNPcmdM_CmQ1qIZrjL16QKKqbW4lIj7oBtBJUXfukoHvVP3dMtOe1g==,gAAAAABnFM0-Fco7S3bFsObkYiKaajuozwsHxwctOymmE97K2nqyI0oGeUs_ieuu_FYp-81crllHXcJyudGMoepT8XiLvs2NuQ==,2024-05-15
+gAAAAABnFZvCO3hKS5yHfbg75TOpWP47kqUfA-pP5esmTa1eaiOAT8F88nTyTRvwPbJT4l7CGMXHQV6GFCIzV_yF25ZfBIcz_Q==,gAAAAABnFZvCLiGD4QVjsebZqA6oe9ZtxOV9nqpAvxjq9zExNfzBwIjH3HUG5Idd8Qp6L5y2wQpK-ZMPeRjoKOOsFBkbi7Po3w==,gAAAAABnFZvC0sPIPcwiKOmZNwG8iw2mCaEehhS4CIVy-6aVB0GZZUpagQeXLk-bXeb0pdnkfHlB5UzF3OMvsSl2s5r_EpIwjw==,1990-01-01
+gAAAAABnFZvCz7_uJpqdyAgMm1HqWaharOZXnHJ311_P2CJPjyoHlmJfr8WMzUfDeWLd8LItMf9u3QpKWvT1l8qminP8mT_JjQ==,gAAAAABnFZvCbzm1AtgM8XDzmd3BZziGA8GN_z3Yt2nssRCSl8PPjWnjkyddns-h5Oa1VtpQ2N3qAXhVyBySK8TXrgzxgYfH9A==,gAAAAABnFZvCnZIwT_JDz8yANq7cwdOnjM9VZLb56Kz9r0hxSH4akV3Id8A7gcJX4Y2U0i74OIXHOJN7cEWGIQkZp78ANK1mvg==,1985-05-15
+gAAAAABnFZvCXx9R1BNIbSsChv_L0Quu8SQ9iN4qOlL1u_kjQlG7seIv8xhugklppYwCi5bAhdfChfaJmZEUUqxpMkF5QmtKMQ==,gAAAAABnFZvCQdj-nmM2y0z-p3DhTnnX3obeBqtBurRA4VDZJXfQU9hsNsJgJrCo1V5Y3IPhj_ZXA_WwZdJzbl7pX2HTTnJbUw==,gAAAAABnFZvCiiFpLAtyhuCVUTDRmYQ69dUaA2w3QsJtVJnPsMUfM42JpwXQk9AILCAnBej8CD6xWypQWeJq2qVJ3rlxYCtM_A==,2024-05-15
 ```
 
 ## How to Build Docker
