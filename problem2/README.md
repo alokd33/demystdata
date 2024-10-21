@@ -117,7 +117,7 @@ al,test,111 Elm St,2024-05-15
 ```
 
 ## Sample Encrypted Data
-After processing, the data is anonymized and saved in anonymized_output.csv as shown below (Data will update/chnage based on key):
+After processing, the data is anonymized and saved in anonymized_output.csv as shown below (Anonymize Data will update/change based on key):
 ```csv
 first_name,last_name,address,date_of_birth
 gAAAAABnFZvCO3hKS5yHfbg75TOpWP47kqUfA-pP5esmTa1eaiOAT8F88nTyTRvwPbJT4l7CGMXHQV6GFCIzV_yF25ZfBIcz_Q==,gAAAAABnFZvCLiGD4QVjsebZqA6oe9ZtxOV9nqpAvxjq9zExNfzBwIjH3HUG5Idd8Qp6L5y2wQpK-ZMPeRjoKOOsFBkbi7Po3w==,gAAAAABnFZvC0sPIPcwiKOmZNwG8iw2mCaEehhS4CIVy-6aVB0GZZUpagQeXLk-bXeb0pdnkfHlB5UzF3OMvsSl2s5r_EpIwjw==,1990-01-01
