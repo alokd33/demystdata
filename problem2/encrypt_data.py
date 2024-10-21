@@ -24,7 +24,7 @@ def anonymize_csv(input_file: str, key: str):
 
     df = spark.read.csv(input_file, header=True, inferSchema=True)
 
-    encrypt_udf = udf(lambda x: encrypt_value(x, broadcast_key), StringType())
+    encrypt_udf = udf(lambda x: encrypt_value(x, broadcast_key.value), StringType())
 
     df_anonymized = df.withColumn("first_name", encrypt_udf(col("first_name"))) \
                       .withColumn("last_name", encrypt_udf(col("last_name"))) \
