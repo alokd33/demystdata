@@ -3,6 +3,101 @@
 ## Project Overview
 This project aims to anonymize personal data in a CSV file by encrypting specific columns (first_name, last_name, and address) using the Fernet symmetric encryption method from the `cryptography` library. The project is structured to work with large datasets (up to 2GB), leveraging the distributed computing capabilities of Apache Spark. The process involves generating a key, encrypting the data, and then decrypting it for validation.
 
+# Process 
+
+```plaintext
++--------------------+
+|   Start Process    |
++--------------------+
+          |
+          v
++--------------------+
+|   Generate Key     |
+|  (generate_key.py) |
++--------------------+
+          |
+          v
++---------------------------+
+|   Store Key in File      |
+|   (secret.key)           |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Load Key                |
+|  (in encrypt_data.py)    |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Broadcast Key to Nodes  |
+|   (spark.sparkContext.broadcast) |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Read Input CSV         |
+|  (input.csv)             |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Encrypt Data            |
+|   (anonymize_csv)        |
+|   - UDF uses broadcasted key |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Write Encrypted Data    |
+|   (to anonymized_output.csv) |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Load Encrypted Data     |
+|   (in decrypt_data.py)    |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Broadcast Key to Nodes   |
+|   (spark.sparkContext.broadcast) |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Decrypt Data            |
+|   (decrypt_csv)          |
+|   - UDF uses broadcasted key |
++---------------------------+
+          |
+          v
++---------------------------+
+|   Display Decrypted Data   |
++---------------------------+
+          |
+          v
++---------------------------+
+|       End Process          |
++---------------------------+
+```
+
+1. Start Process: The entire process begins.
+2. Generate Key: A key is generated using the generate_key.py script.
+3. Store Key in File: The generated key is saved to a file (secret.key).
+4. Load Key: The key is loaded in the encrypt_data.py script.
+5. Broadcast Key to Nodes: The key is broadcasted to all Spark nodes to enable efficient access.
+6. Read Input CSV: The input CSV file containing sensitive data is read.
+7. Encrypt Data: The specified columns are encrypted using a UDF that accesses the broadcasted key.
+8. Write Encrypted Data: The encrypted data is written to a new CSV file (anonymized_output.csv).
+9. Load Encrypted Data: The encrypted data is loaded in the decrypt_data.py script.
+10. Broadcast Key to Nodes: The key is broadcasted again to all nodes for decryption.
+11. Decrypt Data: The encrypted data is decrypted using a UDF that accesses the broadcasted key.
+12. Display Decrypted Data: The decrypted data is displayed for verification.
+13. End Process: The process concludes.
+**Note** : In production will keep secret.key in the vault as key and value pair will have the access control on top that.
+
 ## Input Data
 The source data is provided in `input.csv`:
 
